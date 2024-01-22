@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:5001/api
+
+### Register
+POST {{baseUrl}}/users/register HTTP/1.1
+content-type: application/json
+
+{
+    "username": "aun",
+    "email": "aun@sun.com",
+    "password": "123"
+}
+
+### login
+# @name login
+POST {{baseUrl}}/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "aun@sun.com",
+    "password": "123"
+}
+
+#### Variable Response
+@accessToken = Bearer {{login.response.body.$.accessToken}}
+
+### Get Current User
+
+GET {{baseUrl}}/users/current HTTP/1.1
+Authorization: {{accessToken}}
+
+ 
+### Create Contact
+POST {{baseUrl}}/contacts HTTP/1.1
+content-type: application/json
+Authorization: {{accessToken}}
+
+{
+    "name": "act",
+    "email":"act@act",
+    "phone":"321"
+}
+
+### Get contact
+GET {{baseUrl}}/contacts HTTP/1.1
+Authorization: {{accessToken}}
+
+### Get contact by id
+GET {{baseUrl}}/contacts/65ae82b2d3bec9a56b3d8efa HTTP/1.1
+Authorization: {{accessToken}}
+
+### update contact 
+PUT {{baseUrl}}/contacts/65ae82b2d3bec9a56b3d8efa HTTP/1.1
+content-type: application/json
+Authorization: {{accessToken}}
+
+{
+  "name": "act2",
+  "email": "act@act"
+}
+
+### Delete contact 
+DELETE  {{baseUrl}}/contacts/65aee20030c12f3e8ba9cf68 HTTP/1.1
+Authorization: {{accessToken}}
+
